@@ -1,0 +1,42 @@
+{
+  "connection_key": "request",
+  "result": true,
+  "redis_key": "abcdefg",
+  "filepath": "/var/lib/aion/Data/rededge_sdc/abcdef.json",
+  "api_status_code": 200,
+  "runtime_session_id": "boi9ar543dg91ipdnspi099u231280ab0v8af0ew",
+  "business_partner": 101,
+  "service_label": "EQUIPMENT_MASTER",
+  "api_type": "reads",
+  "message": {
+    "General": null,
+    "Address": null,
+    "BusinessPartner": [
+      {
+        "Equipment": 320000001,
+        "EquipmentPartnerObjectNmbr": 1,
+        "BusinessPartner": 1111,
+        "PartnerFunction": "OPERATOR",
+        "ValidityStartDate": "2023-04-01",
+        "ValidityEndDate": "2026-03-31",
+        "CreationDate": "2023-03-05",
+        "IsMarkedForDeletion": false
+      }
+    ],
+    "GeneralDoc": null,
+    "OwnerBusinessPartner": null
+  },
+  "api_schema": "DPFMEquipmentMasterReads",
+  "accepter": [
+    "BusinessPartner"
+  ],
+  "deleted": false,
+  "sql_update_result": null,
+  "sql_update_error": "",
+  "subfunc_result": null,
+  "subfunc_error": "",
+  "exconf_result": null,
+  "exconf_error": "",
+  "api_processing_result": true,
+  "api_processing_error": ""
+}
