@@ -24,6 +24,7 @@ func (c *DPFMAPICaller) readSqlProcess(
 	var address *[]dpfm_api_output_formatter.Address
 	var businessPartner *[]dpfm_api_output_formatter.BusinessPartner
 	var ownerBusinessPartner *[]dpfm_api_output_formatter.OwnerBusinessPartner
+	var docs *[]dpfm_api_output_formatter.GeneralDoc
 	for _, fn := range accepter {
 		switch fn {
 		case "General":
@@ -33,6 +34,10 @@ func (c *DPFMAPICaller) readSqlProcess(
 		case "Generals":
 			func() {
 				general = c.Generals(mtx, input, output, errs, log)
+			}()
+		case "GeneralDocs":
+			func() {
+				docs = c.GeneralDocs(mtx, input, output, errs, log)
 			}()
 		case "Address":
 			func() {
@@ -55,6 +60,7 @@ func (c *DPFMAPICaller) readSqlProcess(
 		Address:              address,
 		BusinessPartner:      businessPartner,
 		OwnerBusinessPartner: ownerBusinessPartner,
+		GeneralDoc:           docs,
 	}
 
 	return data
@@ -116,6 +122,41 @@ func (c *DPFMAPICaller) Generals(
 	defer rows.Close()
 
 	data, err := dpfm_api_output_formatter.ConvertToGeneral(rows)
+	if err != nil {
+		*errs = append(*errs, err)
+		return nil
+	}
+
+	return data
+}
+
+func (c *DPFMAPICaller) GeneralDocs(
+	mtx *sync.Mutex,
+	input *dpfm_api_input_reader.SDC,
+	output *dpfm_api_output_formatter.SDC,
+	errs *[]error,
+	log *logger.Logger,
+) *[]dpfm_api_output_formatter.GeneralDoc {
+	where := "WHERE ( Equipment, DocIssuerBusinessPartner ) IN "
+	in := ""
+	for _, v := range input.General.GeneralDoc {
+		in = fmt.Sprintf("%s ( %d, %d ), ", in, v.Equipment, *v.DocIssuerBusinessPartner)
+	}
+
+	where = fmt.Sprintf("%s ( %s )", where, in[:len(in)-2])
+
+	rows, err := c.db.Query(
+		`SELECT *
+		FROM DataPlatformMastersAndTransactionsMysqlKube.data_platform_equipment_master_general_doc_data
+		` + where + `;`,
+	)
+	if err != nil {
+		*errs = append(*errs, err)
+		return nil
+	}
+	defer rows.Close()
+
+	data, err := dpfm_api_output_formatter.ConvertToGeneralDoc(rows)
 	if err != nil {
 		*errs = append(*errs, err)
 		return nil
