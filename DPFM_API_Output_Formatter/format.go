@@ -17,7 +17,6 @@ func ConvertToGeneral(rows *sql.Rows) (*[]General, error) {
 
 		err := rows.Scan(
 			&pm.Equipment,
-			&pm.BusinessPartner,
 			&pm.ValidityStartDate,
 			&pm.ValidityEndDate,
 			&pm.EquipmentName,
@@ -35,14 +34,13 @@ func ConvertToGeneral(rows *sql.Rows) (*[]General, error) {
 			&pm.OperationEndTime,
 			&pm.EquipmentStandardID,
 			&pm.EquipmentIndustryStandardName,
-			&pm.CountryOfOrigin,
-			&pm.CountryOfOriginLanguage,
 			&pm.BarcodeType,
 			&pm.AcquisitionDate,
 			&pm.Manufacturer,
-			&pm.ManufacturedCountry,
+			&pm.ManufacturerCountry,
 			&pm.ConstructionYear,
 			&pm.ConstructionMonth,
+			&pm.ConstructionDate,
 			&pm.ManufacturerPartNmbr,
 			&pm.ManufacturerSerialNumber,
 			&pm.MaintenancePlantBusinessPartner,
@@ -52,19 +50,22 @@ func ConvertToGeneral(rows *sql.Rows) (*[]General, error) {
 			&pm.PlantSection,
 			&pm.WorkCenter,
 			&pm.Project,
+			&pm.WBSElement,
 			&pm.MaintenancePlannerGroup,
 			&pm.CatalogProfile,
 			&pm.FunctionalLocation,
 			&pm.SuperordinateEquipment,
 			&pm.EquipInstallationPositionNmbr,
+			&pm.TechnicalObjectSortCode,
+			&pm.BillOfMaterial,
+			&pm.BillOfMaterialItem,
 			&pm.EquipmentIsAvailable,
 			&pm.EquipmentIsInstalled,
-			&pm.EquipIsAllocToSuperiorEquip,
 			&pm.EquipHasSubOrdinateEquipment,
 			&pm.MasterFixedAsset,
 			&pm.FixedAsset,
 			&pm.CreationDate,
-			&pm.LastChangeDateTime,
+			&pm.LastChangeDate,
 			&pm.IsMarkedForDeletion,
 		)
 		if err != nil {
@@ -74,56 +75,57 @@ func ConvertToGeneral(rows *sql.Rows) (*[]General, error) {
 
 		data := pm
 		general = append(general, General{
-			Equipment:                       data.Equipment,
-			BusinessPartner:                 data.BusinessPartner,
-			ValidityStartDate:               data.ValidityStartDate,
-			ValidityEndDate:                 data.ValidityEndDate,
-			EquipmentName:                   data.EquipmentName,
-			EquipmentType:                   data.EquipmentType,
-			EquipmentCategory:               data.EquipmentCategory,
-			TechnicalObjectType:             data.TechnicalObjectType,
-			GrossWeight:                     data.GrossWeight,
-			NetWeight:                       data.NetWeight,
-			WeightUnit:                      data.WeightUnit,
-			SizeOrDimensionText:             data.SizeOrDimensionText,
-			InventoryNumber:                 data.InventoryNumber,
-			OperationStartDate:              data.OperationStartDate,
-			OperationStartTime:              data.OperationStartTime,
-			OperationEndDate:                data.OperationEndDate,
-			OperationEndTime:                data.OperationEndTime,
-			EquipmentStandardID:             data.EquipmentStandardID,
-			EquipmentIndustryStandardName:   data.EquipmentIndustryStandardName,
-			CountryOfOrigin:                 data.CountryOfOrigin,
-			CountryOfOriginLanguage:         data.CountryOfOriginLanguage,
-			BarcodeType:                     data.BarcodeType,
-			AcquisitionDate:                 data.AcquisitionDate,
-			Manufacturer:                    data.Manufacturer,
-			ManufacturedCountry:             data.ManufacturedCountry,
-			ConstructionYear:                data.ConstructionYear,
-			ConstructionMonth:               data.ConstructionMonth,
-			ManufacturerPartNmbr:            data.ManufacturerPartNmbr,
-			ManufacturerSerialNumber:        data.ManufacturerSerialNumber,
-			MaintenancePlantBusinessPartner: data.MaintenancePlantBusinessPartner,
-			MaintenancePlant:                data.MaintenancePlant,
-			AssetLocation:                   data.AssetLocation,
-			AssetRoom:                       data.AssetRoom,
-			PlantSection:                    data.PlantSection,
-			WorkCenter:                      data.WorkCenter,
-			Project:                         data.Project,
-			MaintenancePlannerGroup:         data.MaintenancePlannerGroup,
-			CatalogProfile:                  data.CatalogProfile,
-			FunctionalLocation:              data.FunctionalLocation,
-			SuperordinateEquipment:          data.SuperordinateEquipment,
-			EquipInstallationPositionNmbr:   data.EquipInstallationPositionNmbr,
-			EquipmentIsAvailable:            data.EquipmentIsAvailable,
-			EquipmentIsInstalled:            data.EquipmentIsInstalled,
-			EquipIsAllocToSuperiorEquip:     data.EquipIsAllocToSuperiorEquip,
-			EquipHasSubOrdinateEquipment:    data.EquipHasSubOrdinateEquipment,
-			MasterFixedAsset:                data.MasterFixedAsset,
-			FixedAsset:                      data.FixedAsset,
-			CreationDate:                    data.CreationDate,
-			LastChangeDateTime:              data.LastChangeDateTime,
-			IsMarkedForDeletion:             data.IsMarkedForDeletion,
+			Equipment:							data.Equipment,
+			ValidityStartDate:					data.ValidityStartDate,
+			ValidityEndDate:					data.ValidityEndDate,
+			EquipmentName:						data.EquipmentName,
+			EquipmentType:						data.EquipmentType,
+			EquipmentCategory:					data.EquipmentCategory,
+			TechnicalObjectType:				data.TechnicalObjectType,
+			GrossWeight:						data.GrossWeight,
+			NetWeight:							data.NetWeight,
+			WeightUnit:							data.WeightUnit,
+			SizeOrDimensionText:				data.SizeOrDimensionText,
+			InventoryNumber:					data.InventoryNumber,
+			OperationStartDate:					data.OperationStartDate,
+			OperationStartTime:					data.OperationStartTime,
+			OperationEndDate:					data.OperationEndDate,
+			OperationEndTime:					data.OperationEndTime,
+			EquipmentStandardID:				data.EquipmentStandardID,
+			EquipmentIndustryStandardName:		data.EquipmentIndustryStandardName,
+			BarcodeType:						data.BarcodeType,
+			AcquisitionDate:					data.AcquisitionDate,
+			Manufacturer:						data.Manufacturer,
+			ManufacturerCountry:				data.ManufacturerCountry,
+			ConstructionYear:					data.ConstructionYear,
+			ConstructionMonth:					data.ConstructionMonth,
+			ConstructionDate:					data.ConstructionDate,
+			ManufacturerPartNmbr:				data.ManufacturerPartNmbr,
+			ManufacturerSerialNumber:			data.ManufacturerSerialNumber,
+			MaintenancePlantBusinessPartner:	data.MaintenancePlantBusinessPartner,
+			MaintenancePlant:					data.MaintenancePlant,
+			AssetLocation:						data.AssetLocation,
+			AssetRoom:							data.AssetRoom,
+			PlantSection:						data.PlantSection,
+			WorkCenter:							data.WorkCenter,
+			Project:							data.Project,
+			WBSElement:							data.WBSElement,
+			MaintenancePlannerGroup:			data.MaintenancePlannerGroup,
+			CatalogProfile:						data.CatalogProfile,
+			FunctionalLocation:					data.FunctionalLocation,
+			SuperordinateEquipment:				data.SuperordinateEquipment,
+			EquipInstallationPositionNmbr:		data.EquipInstallationPositionNmbr,
+			TechnicalObjectSortCode:			data.TechnicalObjectSortCode,
+			BillOfMaterial:						data.BillOfMaterial,
+			BillOfMaterialItem:					data.BillOfMaterialItem,
+			EquipmentIsAvailable:				data.EquipmentIsAvailable,
+			EquipmentIsInstalled:				data.EquipmentIsInstalled,
+			EquipHasSubOrdinateEquipment:		data.EquipHasSubOrdinateEquipment,
+			MasterFixedAsset:					data.MasterFixedAsset,
+			FixedAsset:							data.FixedAsset,
+			CreationDate:						data.CreationDate,
+			LastChangeDate:						data.LastChangeDate,
+			IsMarkedForDeletion:				data.IsMarkedForDeletion,
 		})
 	}
 	if i == 0 {
@@ -133,6 +135,139 @@ func ConvertToGeneral(rows *sql.Rows) (*[]General, error) {
 
 	return &general, nil
 }
+
+func ConvertToOwnerBusinessPartner(rows *sql.Rows) (*[]OwnerBusinessPartner, error) {
+	defer rows.Close()
+	ownerBusinessPartner := make([]OwnerBusinessPartner, 0)
+
+	i := 0
+	for rows.Next() {
+		i++
+		pm := &requests.OwnerBusinessPartner{}
+
+		err := rows.Scan(
+			&pm.Equipment,
+			&pm.OwnerBusinessPartner,
+			&pm.ValidityStartDate,
+			&pm.ValidityEndDate,
+			&pm.CreationDate,
+			&pm.LastChangeDate,
+			&pm.IsMarkedForDeletion,
+		)
+		if err != nil {
+			fmt.Printf("err = %+v \n", err)
+			return &ownerBusinessPartner, err
+		}
+
+		data := pm
+		ownerBusinessPartner = append(ownerBusinessPartner, OwnerBusinessPartner{
+			Equipment:                data.Equipment,
+			OwnerBusinessPartner:     data.OwnerBusinessPartner,
+			ValidityStartDate:        data.ValidityStartDate,
+			ValidityEndDate:          data.ValidityEndDate,
+			CreationDate:             data.CreationDate,
+			LastChangeDate:			  data.LastChangeDate,
+			IsMarkedForDeletion:      data.IsMarkedForDeletion,
+		})
+	}
+	if i == 0 {
+		fmt.Printf("DBに対象のレコードが存在しません。")
+		return &ownerBusinessPartner, nil
+	}
+
+	return &ownerBusinessPartner, nil
+}
+
+func ConvertToBusinessPartner(rows *sql.Rows) (*[]BusinessPartner, error) {
+	defer rows.Close()
+	businessPartner := make([]BusinessPartner, 0)
+
+	i := 0
+	for rows.Next() {
+		i++
+		pm := &requests.BusinessPartner{}
+
+		err := rows.Scan(
+			&pm.Equipment,
+			&pm.EquipmentPartnerObjectNmbr,
+			&pm.BusinessPartner,
+			&pm.PartnerFunction,
+			&pm.ValidityStartDate,
+			&pm.ValidityEndDate,
+			&pm.CreationDate,
+			&pm.LastChangeDate,
+			&pm.IsMarkedForDeletion,
+		)
+		if err != nil {
+			fmt.Printf("err = %+v \n", err)
+			return &businessPartner, err
+		}
+
+		data := pm
+		businessPartner = append(businessPartner, BusinessPartner{
+			Equipment:                  data.Equipment,
+			EquipmentPartnerObjectNmbr: data.EquipmentPartnerObjectNmbr,
+			BusinessPartner:            data.BusinessPartner,
+			PartnerFunction:            data.PartnerFunction,
+			ValidityStartDate:          data.ValidityStartDate,
+			ValidityEndDate:            data.ValidityEndDate,
+			CreationDate:               data.CreationDate,
+			LastChangeDate:             data.LastChangeDate,
+			IsMarkedForDeletion:        data.IsMarkedForDeletion,
+		})
+	}
+	if i == 0 {
+		fmt.Printf("DBに対象のレコードが存在しません。")
+		return &businessPartner, nil
+	}
+
+	return &businessPartner, nil
+}
+
+func ConvertToGeneralDoc(rows *sql.Rows) (*[]GeneralDoc, error) {
+	defer rows.Close()
+	generalDoc := make([]GeneralDoc, 0)
+
+	i := 0
+	for rows.Next() {
+		i++
+		pm := &requests.GeneralDoc{}
+
+		err := rows.Scan(
+			&pm.Equipment,
+			&pm.DocType,
+			&pm.DocVersionID,
+			&pm.DocID,
+			&pm.FileExtension,
+			&pm.FileName,
+			&pm.FilePath,
+			&pm.DocIssuerBusinessPartner,
+		)
+		if err != nil {
+			fmt.Printf("err = %+v \n", err)
+			return &generalDoc, err
+		}
+
+		data := pm
+		generalDoc = append(generalDoc, GeneralDoc{
+			Equipment:                data.Equipment,
+			DocType:                  data.DocType,
+			DocVersionID:             data.DocVersionID,
+			DocID:                    data.DocID,
+			FileExtension:            data.FileExtension,
+			FileName:                 data.FileName,
+			FilePath:                 data.FilePath,
+			DocIssuerBusinessPartner: data.DocIssuerBusinessPartner,
+		})
+	}
+	if i == 0 {
+		fmt.Printf("DBに対象のレコードが存在しません。")
+		return &generalDoc, nil
+	}
+
+	return &generalDoc, nil
+}
+
 
 func ConvertToAddress(rows *sql.Rows) (*[]Address, error) {
 	defer rows.Close()
@@ -182,134 +317,4 @@ func ConvertToAddress(rows *sql.Rows) (*[]Address, error) {
 	}
 
 	return &address, nil
-}
-
-func ConvertToBusinessPartner(rows *sql.Rows) (*[]BusinessPartner, error) {
-	defer rows.Close()
-	businessPartner := make([]BusinessPartner, 0)
-
-	i := 0
-	for rows.Next() {
-		i++
-		pm := &requests.BusinessPartner{}
-
-		err := rows.Scan(
-			&pm.Equipment,
-			&pm.EquipmentPartnerObjectNmbr,
-			&pm.BusinessPartner,
-			&pm.PartnerFunction,
-			&pm.ValidityStartDate,
-			&pm.ValidityEndDate,
-			&pm.CreationDate,
-			&pm.IsMarkedForDeletion,
-		)
-		if err != nil {
-			fmt.Printf("err = %+v \n", err)
-			return &businessPartner, err
-		}
-
-		data := pm
-		businessPartner = append(businessPartner, BusinessPartner{
-			Equipment:                  data.Equipment,
-			EquipmentPartnerObjectNmbr: data.EquipmentPartnerObjectNmbr,
-			BusinessPartner:            data.BusinessPartner,
-			PartnerFunction:            data.PartnerFunction,
-			ValidityStartDate:          data.ValidityStartDate,
-			ValidityEndDate:            data.ValidityEndDate,
-			CreationDate:               data.CreationDate,
-			IsMarkedForDeletion:        data.IsMarkedForDeletion,
-		})
-	}
-	if i == 0 {
-		fmt.Printf("DBに対象のレコードが存在しません。")
-		return &businessPartner, nil
-	}
-
-	return &businessPartner, nil
-}
-
-func ConvertToOwnerBusinessPartner(rows *sql.Rows) (*[]OwnerBusinessPartner, error) {
-	defer rows.Close()
-	ownerBusinessPartner := make([]OwnerBusinessPartner, 0)
-
-	i := 0
-	for rows.Next() {
-		i++
-		pm := &requests.OwnerBusinessPartner{}
-
-		err := rows.Scan(
-			&pm.Equipment,
-			&pm.OwnerBusinessPartner,
-			&pm.ValidityStartDate,
-			&pm.ValidityEndDate,
-			&pm.CreationDate,
-			&pm.BusinessPartnerEquipment,
-			&pm.IsMarkedForDeletion,
-		)
-		if err != nil {
-			fmt.Printf("err = %+v \n", err)
-			return &ownerBusinessPartner, err
-		}
-
-		data := pm
-		ownerBusinessPartner = append(ownerBusinessPartner, OwnerBusinessPartner{
-			Equipment:                data.Equipment,
-			OwnerBusinessPartner:     data.OwnerBusinessPartner,
-			ValidityStartDate:        data.ValidityStartDate,
-			ValidityEndDate:          data.ValidityEndDate,
-			CreationDate:             data.CreationDate,
-			BusinessPartnerEquipment: data.BusinessPartnerEquipment,
-			IsMarkedForDeletion:      data.IsMarkedForDeletion,
-		})
-	}
-	if i == 0 {
-		fmt.Printf("DBに対象のレコードが存在しません。")
-		return &ownerBusinessPartner, nil
-	}
-
-	return &ownerBusinessPartner, nil
-}
-
-func ConvertToGeneralDoc(rows *sql.Rows) (*[]GeneralDoc, error) {
-	defer rows.Close()
-	generalDoc := make([]GeneralDoc, 0)
-
-	i := 0
-	for rows.Next() {
-		i++
-		pm := &requests.GeneralDoc{}
-
-		err := rows.Scan(
-			&pm.Equipment,
-			&pm.DocType,
-			&pm.DocVersionID,
-			&pm.DocID,
-			&pm.FileExtension,
-			&pm.FileName,
-			&pm.FilePath,
-			&pm.DocIssuerBusinessPartner,
-		)
-		if err != nil {
-			fmt.Printf("err = %+v \n", err)
-			return &generalDoc, err
-		}
-
-		data := pm
-		generalDoc = append(generalDoc, GeneralDoc{
-			Equipment:                data.Equipment,
-			DocType:                  data.DocType,
-			DocVersionID:             data.DocVersionID,
-			DocID:                    data.DocID,
-			FileExtension:            data.FileExtension,
-			FileName:                 data.FileName,
-			FilePath:                 data.FilePath,
-			DocIssuerBusinessPartner: data.DocIssuerBusinessPartner,
-		})
-	}
-	if i == 0 {
-		fmt.Printf("DBに対象のレコードが存在しません。")
-		return &generalDoc, nil
-	}
-
-	return &generalDoc, nil
 }

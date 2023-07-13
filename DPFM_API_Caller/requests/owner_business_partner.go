@@ -5,7 +5,7 @@ type OwnerBusinessPartner struct {
 	OwnerBusinessPartner     int     `json:"OwnerBusinessPartner"`
 	ValidityStartDate        string  `json:"ValidityStartDate"`
 	ValidityEndDate          string  `json:"ValidityEndDate"`
-	CreationDate             *string `json:"CreationDate"`
-	BusinessPartnerEquipment *int    `json:"BusinessPartnerEquipment"`
+	CreationDate             string  `json:"CreationDate"`
+	LastChangeDate           string  `json:"LastChangeDate"`
 	IsMarkedForDeletion      *bool   `json:"IsMarkedForDeletion"`
 }

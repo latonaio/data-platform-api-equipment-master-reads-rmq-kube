@@ -8,5 +8,6 @@ type BusinessPartner struct {
 	ValidityStartDate          string `json:"ValidityStartDate"`
 	ValidityEndDate            string `json:"ValidityEndDate"`
 	CreationDate               string `json:"CreationDate"`
+	LastChangeDate             string `json:"LastChangeDate"`
 	IsMarkedForDeletion        *bool  `json:"IsMarkedForDeletion"`
 }

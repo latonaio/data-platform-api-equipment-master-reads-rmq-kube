@@ -5,12 +5,11 @@
 	"filepath": "/var/lib/aion/Data/rededge_sdc/abcdef.json",
 	"api_status_code": 200,
 	"runtime_session_id": "boi9ar543dg91ipdnspi099u231280ab0v8af0ew",
-	"business_partner": 101,
+	"business_partner": 201,
 	"service_label": "EQUIPMENT_MASTER",
 	"api_type": "reads",
 	"EquipmentMaster": {
 		"Equipment": 320000001,
-		"BusinessPartner": null,
 		"ValidityStartDate": "",
 		"ValidityEndDate": "",
 		"EquipmentName": "",
@@ -28,14 +27,13 @@
 		"OperationEndTime": "",
 		"EquipmentStandardID": "",
 		"EquipmentIndustryStandardName": "",
-		"CountryOfOrigin": "",
-		"CountryOfOriginLanguage": "",
 		"BarcodeType": "",
 		"AcquisitionDate": "",
 		"Manufacturer": null,
-		"ManufacturedCountry": "",
+		"ManufacturerCountry": "",
 		"ConstructionYear": null,
 		"ConstructionMonth": null,
+		"ConstructionDate": "",
 		"ManufacturerPartNmbr": "",
 		"ManufacturerSerialNumber": "",
 		"MaintenancePlantBusinessPartner": null,
@@ -43,70 +41,60 @@
 		"AssetLocation": "",
 		"AssetRoom": "",
 		"PlantSection": "",
-		"WorkCenter": "",
-		"Project": "",
+		"WorkCenter": null,
+		"Project": null,
+		"WBSElement": null,
 		"MaintenancePlannerGroup": "",
 		"CatalogProfile": "",
 		"FunctionalLocation": "",
-		"SuperordinateEquipment": "",
+		"SuperordinateEquipment": null,
 		"EquipInstallationPositionNmbr": "",
+		"BillOfMaterial": null,
+		"BillOfMaterialItem": null,
 		"EquipmentIsAvailable": null,
 		"EquipmentIsInstalled": null,
-		"EquipIsAllocToSuperiorEquip": null,
-		"EquipHasSubOrdinateEquipment": "",
+		"EquipHasSubOrdinateEquipment": null,
 		"MasterFixedAsset": "",
 		"FixedAsset": "",
 		"CreationDate": "",
-		"LastChangeDateTime": "",
+		"LastChangeDate": "",
 		"IsMarkedForDeletion": null,
-		"Address": [
-			{
-				"AddressID": null,
-				"PostalCode": "",
-				"LocalRegion": "",
-				"Country": "",
-				"District": "",
-				"StreetName": "",
-				"CityName": "",
-				"Building": "",
-				"Floor": null,
-				"Room": null
-			}
-		],
-		"EMBusinessPartner": [
-			{
-				"EquipmentPartnerObjectNmbr": null,
-				"BusinessPartner": null,
-				"PartnerFunction": "",
-				"ValidityStartDate": "",
-				"ValidityEndDate": "",
-				"CreationDate": "",
-				"IsMarkedForDeletion": null
-			}
-		],
-		"GeneralDoc": [
-			{
-				"DocType": "",
-				"DocVersionID": null,
-				"DocID": "",
-				"FileExtension": "",
-				"FileName": "",
-				"FilePath": "",
-				"DocIssuerBusinessPartner": null
-			}
-		],
 		"OwnerBusinessPartner": [
 			{
 				"OwnerBusinessPartner": null,
 				"ValidityStartDate": "",
 				"ValidityEndDate": "",
 				"CreationDate": "",
-				"BusinessPartnerEquipment": null,
+				"LastChangeDate": "",
 				"IsMarkedForDeletion": null
+			}
+		],
+		"BusinessPartner": [
+			{
+				"EquipmentPartnerObjectNmbr": null,
+				"BusinessPartner": null,
+				"PatnerFunction": "",
+				"ValidityStartDate": "",
+				"ValidityEndDate": "",
+				"CreationDate": "",
+				"LastChangeDate": "",
+				"IsMarkedForDeletion": null
+			}
+		],
+		"GeneralDoc": [
+			{
+				"DocType": "",
+				"DocVersionID": "",
+				"DocID": "",
+				"FileExtension": "",
+				"FileName": "",
+				"FilePath": "",
+				"DocIssuerBusinessPartner": ""
 			}
 		]
 	},
 	"api_schema": "DPFMEquipmentMasterReads",
-	"accepter": ["General"],
-	"deleted": false
+	"accepter": [
+		"General"
+	]
 }
